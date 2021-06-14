@@ -1,0 +1,6 @@
+# Ignore pre-precessed Data
+d02_intermediate
+
+# Ignore  in developement
+env
+data
