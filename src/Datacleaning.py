@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""DatacleaningMVP.py: Run for retrive the Data use by the project."""
+"""Datacleaning.py: Run for retrive the Data use by the project."""
 
 __author__ = "Dewynter Antoine AKA Warwin"
 __credits__ = ["Dewynter Antoine AKA Warwin"]

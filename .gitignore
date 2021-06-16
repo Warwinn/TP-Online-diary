@@ -1,6 +1,13 @@
 # Ignore pre-precessed Data
 d02_intermediate
 
+# Ignore thepersonnal login information
+src/log.py
+
+# Ignore cache
+src/__pycache__
+
 # Ignore  in developement
 env
 data
+src/model_NLP
