@@ -55,13 +55,8 @@ my_cursor.execute("use Online_Diary")
 
 
 # Create Tables
-my_cursor.execute("CREATE TABLE IF NOT EXISTS user (user_id SMALLINT UNSIGNED NOT NULL"
-" AUTO_INCREMENT PRIMARY KEY, user_name VARCHAR(20), user_last_meet DATETIME,"
-" user_next_meet DATETIME) ENGINE = INNODB;")
-my_cursor.execute("CREATE TABLE IF NOT EXISTS daily_message (dm_id MEDIUMINT UNSIGNED"
-" NOT NULL AUTO_INCREMENT PRIMARY KEY, user_id SMALLINT UNSIGNED, dm_text TEXT,"
-" dm_emotion VARCHAR(100), dm_datetime DATETIME, FOREIGN KEY (user_id) REFERENCES"
-" user(user_id) ON UPDATE CASCADE ON DELETE CASCADE)ENGINE = INNODB;")
+my_cursor.execute("CREATE TABLE IF NOT EXISTS user (user_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, user_name VARCHAR(20), user_last_meet DATETIME, user_next_meet DATETIME) ENGINE = INNODB;")
+my_cursor.execute("CREATE TABLE IF NOT EXISTS daily_message (dm_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, user_id SMALLINT UNSIGNED, dm_text TEXT, dm_emotion VARCHAR(100), dm_prob_anger DECIMAL(7,6), dm_prob_fear DECIMAL(7,6), dm_prob_happy DECIMAL(7,6), dm_prob_love DECIMAL(7,6),dm_prob_sadness DECIMAL(7,6),dm_prob_surprise DECIMAL(7,6), dm_datetime DATETIME, FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE CASCADE)ENGINE = INNODB;")
 my_db.commit()
 
 # Randomise quantity and client name
@@ -79,14 +74,12 @@ for client in selected_client:
     last_meet = datetime.date.today()
     #random_date("01/01/2021 00:00 AM", "06/01/2021 00:00 AM", random.random())
     next_meet = last_meet + datetime.timedelta(days=7)
-    insert_client = f"INSERT INTO user (user_id, user_name, user_last_meet, "
-    " user_next_meet) VALUES (null, '{client}', '{last_meet}', '{next_meet}');"
+    insert_client = f"INSERT INTO user (user_id, user_name, user_last_meet, user_next_meet) VALUES (null, '{client}', '{last_meet}', '{next_meet}');"
     my_cursor.execute(insert_client)
 my_db.commit()
 
 # Import Text and model for Database
 df_BDD = pd.read_csv(r'./data/d03_cleaned_data/dataBDD.csv')
-
 my_cursor.execute("SELECT user_id FROM user")
 
 list_client_id=[]
@@ -103,12 +96,10 @@ list_emotion=['anger','fear','happy','love','sadness','surprise']
 for text in df_BDD['text']:
     random_dates= datetime.date.today()
     #random_date("01/01/2021 00:00 AM", "06/01/2021 00:00 AM", random.random())
-    prediction= np.argmax(model.predict([text]))
-    prediction= list_emotion[prediction]
+    prediction_prob = model.predict([text])
+    prediction= list_emotion[np.argmax(prediction_prob)]
     text = text.replace("'", "")
     text = text.replace("\\","")
-    insert_daily_message = f"INSERT INTO daily_message VALUES  (null,"
-    " '{random.choice(list_client_ids)}', '{text}','{prediction}', '{random_dates}');"
-    print (insert_daily_message)
+    insert_daily_message = f"INSERT INTO daily_message VALUES  (null, '{random.choice(list_client_ids)}', '{text}','{prediction}','{np.round(prediction_prob[0][0],6)}','{np.round(prediction_prob[0][1],6)}', '{np.round(prediction_prob[0][2],6)}','{np.round(prediction_prob[0][3],6)}','{np.round(prediction_prob[0][4],6)}','{np.round(prediction_prob[0][5],6)}','{random_dates}');"
     my_cursor.execute(insert_daily_message)
     my_db.commit()
