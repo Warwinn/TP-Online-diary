@@ -8,15 +8,12 @@ __credits__ = ["Dewynter Antoine AKA Warwin"]
 __version__ = "1.0"
 __status__ = "Developement"
 
-# Import Pandas
-import pandas as pd
-
-# Import Split Tool
-from sklearn.model_selection import train_test_split
-
 # Set Relative Path
 import sys
 sys.path.append("../src")
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
 # Import data
 df_dataK = pd.read_csv(r'./data/d02_intermediate/CleanKaggle.csv')

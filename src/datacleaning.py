@@ -8,13 +8,13 @@ __credits__ = ["Dewynter Antoine AKA Warwin"]
 __version__ = "1.0"
 __status__ = "Developement"
 
-# Import Pandas
-import pandas as pd
-
 # Set Relative Path
 import sys
 sys.path.append("./TP-Online-diary")
 sys.path.append("./data")
+
+# Import Pandas
+import pandas as pd
 
 # Import data
 df_dataK = pd.read_csv(r'./data/d01_raw/Emotion_Kaggle.csv')
@@ -35,7 +35,7 @@ del df_dataK
 df_dataW = pd.read_csv(r'./data/d01_raw/Emotion_Dataworld.csv')
 
 # Select Data
-df_dataW = df_dataW[["sentiment","content"]] 
+df_dataW = df_dataW[["sentiment","content"]]
 
 # Rename column
 df_dataW.rename(columns={"content":"text","sentiment":"emotion"},inplace=True)
@@ -45,7 +45,7 @@ df_dataW.drop_duplicates(inplace=True)
 
 # Transform to Basic emotion
 def basic_emotion(row):
-    
+    """Transform all emotion into 6 primary emotion"""
     if row == "worry":
         return "fear"
     elif row == "happiness":
@@ -59,9 +59,8 @@ def basic_emotion(row):
     elif row == "boredom":
         return "sadness"
     elif row == "hate":
-        return "anger"   
-    else :
-        return row
+        return "anger"
+    return row
 
 df_dataW["emotion"]= df_dataW["emotion"].apply(basic_emotion)
 
