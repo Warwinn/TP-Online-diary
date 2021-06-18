@@ -3,9 +3,11 @@ d02_intermediate
 
 # Ignore thepersonnal login information
 src/log.py
+.vscodde
 
 # Ignore cache
-src/__pycache__
+*/*/__pycache__
+*/__pycache__
 
 # Ignore  in developement
 env
