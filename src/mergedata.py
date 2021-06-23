@@ -23,7 +23,7 @@ frames = [df_dataK , df_dataW]
 df_datall = pd.concat(frames)
 
 # Split Data Model Training and data BDD
-ML, BDD = train_test_split(df_datall, test_size=0.1, random_state=1)
+ML, BDD = train_test_split(df_datall, test_size=0.01, random_state=1)
 
 # Remove cache
 del df_datall

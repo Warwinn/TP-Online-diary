@@ -9,38 +9,19 @@ __status__ = "Developement"
 
 import sys
 import datetime
-import time
+
 import random
 import pandas as pd
 import keras
 import numpy as np
 import mysql.connector
 from log import host,user,password
+from faker import Faker
 
 sys.path.append("./TP-Online-diary")
 sys.path.append("./data")
 
-def str_time_prop(start, end, time_format, prop):
-    """Get a time at a proportion of a range of two formatted times.
-
-    start and end should be strings specifying times formatted in the
-    given format (strftime-style), giving an interval [start, end].
-    prop specifies how a proportion of the interval to be taken after
-    start.  The returned time will be in the specified format.
-    """
-
-    stime = time.mktime(time.strptime(start, time_format))
-    etime = time.mktime(time.strptime(end, time_format))
-
-    ptime = stime + prop * (etime - stime)
-
-    return time.strftime(time_format, time.localtime(ptime))
-
-
-def random_date(start, end, prop):
-    """part of str_time_prop fonction"""
-    return str_time_prop(start, end, '%m/%d/%Y %I:%M %p', prop)
-
+fake=Faker()
 
 # MYSQL Database connection
 
@@ -71,8 +52,7 @@ selected_client = random.sample(client,rand)
 
 # Fill User Table
 for client in selected_client:
-    last_meet = datetime.date.today()
-    #random_date("01/01/2021 00:00 AM", "06/01/2021 00:00 AM", random.random())
+    last_meet = fake.date_between(start_date='-1y', end_date='-1m')
     next_meet = last_meet + datetime.timedelta(days=7)
     insert_client = f"INSERT INTO user (user_id, user_name, user_last_meet, user_next_meet) VALUES (null, '{client}', '{last_meet}', '{next_meet}');"
     my_cursor.execute(insert_client)
@@ -94,8 +74,7 @@ list_emotion=['anger','fear','happy','love','sadness','surprise']
 
 # Fill Message Table
 for text in df_BDD['text']:
-    random_dates= datetime.date.today()
-    #random_date("01/01/2021 00:00 AM", "06/01/2021 00:00 AM", random.random())
+    random_dates = fake.date_between(start_date='-1y', end_date='-1m')
     prediction_prob = model.predict([text])
     prediction= list_emotion[np.argmax(prediction_prob)]
     text = text.replace("'", "")
