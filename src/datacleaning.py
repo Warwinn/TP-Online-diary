@@ -9,6 +9,7 @@ __version__ = "1.0"
 __status__ = "Developement"
 
 import sys
+import os
 import pandas as pd
 
 sys.path.append("./TP-Online-diary")
@@ -24,6 +25,7 @@ df_dataK.rename(columns={"Text":"text","Emotion":"emotion"},inplace=True)
 df_dataK.drop_duplicates(inplace=True)
 
 # Export to CSV
+os.mkdir('data/d02_intermediate')
 df_dataK.to_csv("./data/d02_intermediate/CleanKaggle.csv",index=False)
 
 # Emptying cache

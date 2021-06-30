@@ -9,6 +9,7 @@ __version__ = "1.0"
 __status__ = "Developement"
 
 import sys
+import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -29,6 +30,7 @@ ML, BDD = train_test_split(df_datall, test_size=0.01, random_state=1)
 del df_datall
 
 # Export to CSV
+os.mkdir('data/d03_cleaned_data')
 BDD.to_csv("./data/d03_cleaned_data/dataBDD.csv",index=False)
 
 # Remove cache

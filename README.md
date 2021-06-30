@@ -44,4 +44,9 @@ Sur votre outil de visualisation préféré, réaliser un tableau de bord pour l
 
 # Procesus d'exexution : 
 
-Une fois dans l'environement:
+- creation de l'environement requirement.txt
+- execute : datacleaning.py
+            mergedata.py
+            create_ddb.py
+- streamlit run app/app.py
+- uvicorn app.api:app --reload
