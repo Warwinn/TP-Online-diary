@@ -3,13 +3,17 @@ d02_intermediate
 
 # Ignore thepersonnal login information
 src/log.py
-.vscodde
+
+#Ignore Useless
+.vscode
+/notebook
 
 # Ignore cache
 */*/__pycache__
 */__pycache__
 
-# Ignore  in developement
-env
-data
-src/model_NLP
+# Ignore  for save git
+data/d02_intermediate
+data/d03_cleaned_data
+data/visualisation_cache
+env 

@@ -1,2 +1,2 @@
-from app.routes.user import user
+from app.routes.routes import user
 

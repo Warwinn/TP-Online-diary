@@ -37,4 +37,11 @@ Bonus:
 
 Sur votre outil de visualisation préféré, réaliser un tableau de bord pour le coach qui requétera l'API
 
-​
+# Description des dossiers  : 
+
+/app : Application et API
+/src : Scrpit de creation de la basse de donnée et stoquage des models pré-entrainé
+
+# Procesus d'exexution : 
+
+Une fois dans l'environement:
